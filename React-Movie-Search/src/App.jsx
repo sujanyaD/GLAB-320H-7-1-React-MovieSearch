@@ -8,11 +8,13 @@ import MovieDisplay from './components/MovieDisplay';
 import Form from './components/Form';
 
 export default function App() {
-  const apiKey = "98e3fb1f";
+  const apiKey = "366775aa";
 //state to hold movie data
   const [movie, setMovie] = useState(null);
 // function to get movies
+
   const getMovie =async(searchTerm)=>{
+    try{
 //make fetch reuest and store response
     const response =await fetch(
       `http://www.omdbapi.com/?apikey=${apiKey}&t=${searchTerm}`
@@ -20,15 +22,16 @@ export default function App() {
     //parse JSON response into a Javascript object
     const data =await response.json();
     setMovie(data);
+  }catch(e){
+    console.error(e)
   }
+}
 
   return (
-    <div className='App'>
+    <div className="App">
       {/* // passing getMovie as a prop for movieSearch */}
-      <form moviesearch={getMovie}/>
+      <Form moviesearch={getMovie}/>
       <MovieDisplay movie={movie}/>
     </div>
   );
 }
-
-
